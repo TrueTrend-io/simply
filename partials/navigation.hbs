@@ -34,16 +34,16 @@
 {{!-- Primary Navigation --}}
 {{else}}
 
-<nav class="header-center mainMenu relative flex items-center pr-5 grow overflow-auto lg:overflow-visible">
+<nav class="header-center mainMenu relative flex justify-center items-center pr-5 grow overflow-auto lg:overflow-visible">
     <ul itemscope
         itemtype="http://www.schema.org/SiteNavigationElement"
-        class="nav hidden lg:flex whitespace-nowrap">
+        class="nav hidden lg:flex lg:flex-row gap-8 whitespace-nowrap">
 
         {{#foreach navigation}}
         <li itemprop="name">
             <a itemprop="url"
                 href="{{url absolute="true"}}"
-                class="mainMenu-link godo-tracking h-16 flex items-center p-3 text-base {{#if current}}active text-primary font-medium{{else}}text-header-link hover:text-primary{{/if}}"
+                class="mainMenu-link godo-tracking flex items-center {{#if current}}active text-primary font-medium{{else}}text-header-link hover:text-primary{{/if}}"
                 data-event-category="Header"
                 data-event-action="Menu"
                 data-event-label="{{label}}"
@@ -56,7 +56,7 @@
         {{!-- Has DropDown Menu --}}
         {{#if navigationDropDown}}
         <li class="dropdown is-hoverable">
-            <a href="#" class="mainMenu-link dropdown-trigger h-16 flex items-center p-3 text-base text-header-link hover:text-primary">
+            <a href="#" class="mainMenu-link dropdown-trigger flex items-center px-3 text-header-link hover:text-primary">
                 <span>{{t "More"}}</span>
                 <svg class="icon is-small transform rotate-90"><use xlink:href="#icon-arrow-forward"></use></svg>
             </a>

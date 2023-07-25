@@ -88,8 +88,8 @@ collections:
   # Default
   /:
     permalink: /{slug}/
-    filter: 'tag:-[hash-portfolio,hash-kusi-doc,hash-podcast]'
-    template: index
+    template: godo-template-medium
+    limit: 14
 
 taxonomies:
   tag: /tag/{slug}/

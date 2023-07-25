@@ -1,24 +1,70 @@
-<footer class="footer-light py-10 lg:pt-16 text-center lg:text-left {{#is "post"}}bg-gray-150{{/is}}">
-    <div class="mx-auto max-w-extreme px-4">
-        <div class="flex flex-col lg:flex-row justify-between">
-            {{!-- Copy Right --}}
-            <div class="footer-copy text-sm order-3 mt-8 flex-none lg:text-left lg:order-none lg:mt-0">
-                &copy; {{date format="YYYY"}} {{@site.title}}. All rights reserved.
-                <div class="mt-2">
-                    Design with
-                    <svg class="icon animated infinite pulse" style="color:red;width:15px"><use xlink:href="#icon-heart"></use></svg>
-                    by
-                    <a href="https://godofredo.ninja" class="hover:text-primary" title="Developer FullStack.">@GodoFredoNinja</a>
-                </div>
+<footer class="bg-gray-50">
+    <div class="p-4 py-6 mx-auto max-w-screen-xl md:p-8 lg:-10">
+        <div class="grid grid-cols-2 gap-8 lg:grid-cols-6">
+            <div class="col-span-2">
+                <img src="/img/ttlogo.svg" class="mr-3 h-16 sm:h-12 logo-default" alt="TrueTrend.io Logo" />
+                <img src="/img/ttlogo-light.svg" class="mr-3 h-16 sm:h-12 hidden logo-dark-mode" alt="TrueTrend.io Logo" />
+                <p class="my-4 font-light text-gray-500">True Trend provides signals, training and tools to help professional traders navigate markets with confidence.</p>
+                <ul class="flex mt-5 space-x-6">
+                    <li>
+                        <a href="https://twitter.com/Truetrend_io" class="text-gray-500 hover:text-gray-900">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                        </a>
+                    </li>
+                </ul>
             </div>
-
-            {{!-- Footer Menu --}}
-            {{#if @site.secondary_navigation}}<div class="mx-8">{{navigation type="secondary"}}</div>{{/if}}
-
-            {{!-- Social Media - partilas/widget/social-media.hbs --}}
-            {{> "widget/social-media" class="footer-social-media mt-8 flex-none lg:mt-0 is-inline"}}
-
+            <div class="lg:mx-auto">
+                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Our Products</h2>
+                <ul class="text-gray-500">
+                    <li class="mb-4">
+                        <a href="/signals" class=" hover:underline">Signals</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="/training" class="hover:underline">Training</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="lg:mx-auto">
+                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Company</h2>
+                <ul class="text-gray-500">
+                    <li class="mb-4">
+                        <a href="/about" class="hover:underline">About</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="/contact" class="hover:underline">Contact Us</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="/partner" class="hover:underline">Partner with Us</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="lg:mx-auto">
+                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Support</h2>
+                <ul class="text-gray-500">
+                    <li class="mb-4">
+                        <a href="#" class="hover:underline">Discord Server</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="/support" class="hover:underline">Support</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="lg:mx-auto">
+                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources</h2>
+                <ul class="text-gray-500">
+                    <li class="mb-4">
+                        <a href="/privacy" class="hover:underline">Privacy</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="/terms" class="hover:underline">Terms of Use</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="/disclosures" class="hover:underline">Disclosures</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-
+        <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8">
+        <span class="block text-sm text-center text-gray-500">© 2023 <a href="/" class="hover:underline">True Trend Labs Inc</a>. All Rights Reserved.</span>
     </div>
 </footer>
