@@ -146,6 +146,15 @@ function images (done) {
   ], handleError(done))
 }
 
+// JsDelivr
+function jsdelivr (done) {
+  pump([
+    src('src/jsdelivr/**/*.*'),
+    dest('assets/jsdelivr'),
+    livereload()
+  ], handleError(done))
+}
+
 function copyAmpStyle (done) {
   pump([
     src('assets/styles/amp.css'),
@@ -176,7 +185,7 @@ function zipper (done) {
       'locales/*.json',
       '*.hbs',
       'partials/**',
-      'podcast/**',      
+      'podcast/**',
       'LICENSE',
       'package.json',
       'README.md',
@@ -236,8 +245,9 @@ const jsWatcher = () => watch(['src/js/**', '*.js'], scripts)
 const imgWatcher = () => watch('src/img/**', images)
 // const hbsWatcher = () => watch(['*.hbs', 'partials/**/*.hbs'], hbs)
 const hbsWatcher = () => watch(['*.hbs', 'partials/**/*.hbs'], styles)
+const jsDelivrWatcher = () => watch('src/jsdelivr/**', '*', jsdelivr)
 
-const compile = parallel(styles, scripts, images)
+const compile = parallel(styles, scripts, images, jsdelivr)
 const watcher = parallel(cssWatcher, jsWatcher, imgWatcher, hbsWatcher)
 
 const build = series(clean, compile)
