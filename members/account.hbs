@@ -18,7 +18,7 @@
                     {{#if cancel_at_period_end}}
                         <p>
                             {{!-- Hey! You have an active <strong>{{@site.title}}</strong> account with access to all areas. Get in touch if have any problems or need some help getting things updated, and thanks for subscribing. --}}
-                            <strong class="subscription-expiration-warning text-danger">Your subscription will expire on {{date current_period_end format="DD MMM YYYY"}}.</strong> If you change your mind in the meantime you can turn auto-renew back on to continue your subscription.
+                            <strong class="subscription-expiration-warning text-danger">Your subscription will expire on {{date current_period_end format="MMM D, YYYY"}}.</strong> If you change your mind in the meantime you can turn auto-renew back on to continue your subscription.
                         </p>
                     {{else}}
                         <p>
@@ -61,7 +61,7 @@
                                 Next bill date
                             {{/if}}
                         </label>
-                        <span class="subscriber-detail-content text-gray-700 text-sm">{{date current_period_end format="DD MMM YYYY"}}</span>
+                        <span class="subscriber-detail-content text-gray-700 text-sm">{{date current_period_end format="MMM D, YYYY"}}</span>
                     </div>
                 </div>
             </div>

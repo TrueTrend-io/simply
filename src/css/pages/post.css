@@ -81,7 +81,7 @@
       &::before {
         box-sizing: border-box;
         display: inline-block;
-        margin-left: -1.25rem;
+        margin-left: -2.5rem;
         position: absolute;
         text-align: right;
       }
@@ -98,6 +98,7 @@
     content: counter(post) ".";
     counter-increment: post;
     padding-right: 0.75rem;
+    width: 2.5rem;
   }
 }
 

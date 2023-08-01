@@ -24,7 +24,7 @@
                 <div class="text-sm font-medium"><a href="{{url}}" class="text-gray-800">{{name}}</a></div>
             {{/primary_author}}
                 <div class="flex items-center text-gray-500 text-sm">
-                    <time class="capitalize" datetime="{{date format="YYYY-MM-DD"}}">{{date format="D MMM YYYY"}}</time>
+                    <time class="capitalize" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMM D, YYYY"}}</time>
                     <span class="mx-1">·</span>
                     <span title="{{reading_time seconds=(t "< 1 min read") minute=(t "1 min read") minutes=(t "% min read")}}">{{reading_time seconds=(t "< 1 min read") minute=(t "1 min read") minutes=(t "% min read")}}</span>
                 </div>
