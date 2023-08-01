@@ -46,7 +46,25 @@
   & > hr,
   & > blockquote {
     position: relative;
-    margin-top: 6vmin;
+    border-left: none;
+    margin: 6vmin 4vmin 2vmin 4vmin;
+    padding: 40px 40px 20px 50px;
+    border-top: 1px solid #5cc8cb;
+    border-bottom: 1px solid #5cc8cb;
+    border-radius: 10px;
+    font-size: 1.35rem;
+    color: $gray-500;
+  }
+
+  & > blockquote::before {
+    content: "\201C";
+    display: block;
+    color: #5cc8cb;
+    font-size: 80px;
+    height: 0;
+    left: -50px;
+    position: relative;
+    top: -10px;
   }
 
   /* stylelint-disable */
