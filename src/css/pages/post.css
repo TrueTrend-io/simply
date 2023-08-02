@@ -110,6 +110,7 @@
     content: "\2022";
     opacity: .9;
     transform: scale(1.1);
+    margin-left: -1.5rem;
   }
 
   ol > li::before {
