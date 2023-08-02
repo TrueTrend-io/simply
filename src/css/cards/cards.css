@@ -9,12 +9,12 @@
 /* Add extra margin before/after any cards,
 except for when immediately preceeded by a heading */
 .post-body :not(.kg-card):not([id]) + .kg-card {
-  margin-top: 6vmin;
+  margin-top: 4vmin;
   margin-bottom: 0;
 }
 
 .post-body .kg-card + :not(.kg-card) {
-  margin-top: 6vmin;
+  margin-top: 4vmin;
   margin-bottom: 0;
 }
 

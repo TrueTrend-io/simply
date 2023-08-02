@@ -19,7 +19,7 @@
 
   /* stylelint-disable-next-line */
   & > * + * {
-    margin-top: 4vmin;
+    margin-top: 2.5vmin;
     margin-bottom: 0;
   }
 
