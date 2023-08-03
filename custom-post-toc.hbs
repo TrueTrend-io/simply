@@ -4,53 +4,54 @@
 {{#post}}
 
 {{!-- Class for <body> --}}
-{{#contentFor "special_body_class"}}is-article{{/contentFor}}
+    {{#contentFor "special_body_class"}}is-article{{/contentFor}}
 
-<article class="post py-vmin8 relative">
-    <header class="post-header godo-canvas">
-        {{!-- [Title, Excerpt, Author, DateTime, Share]- partials/article/article-header.hbs --}}
-        {{> "article/article-header"}}
-    </header>
+    <article class="post py-vmin8 relative">
+        <header class="post-header godo-canvas">
+            {{!-- [Title, Excerpt, Author, DateTime, Share]- partials/article/article-header.hbs --}}
+            {{> "article/article-header"}}
+        </header>
 
-    {{!-- Article Body - partials/article/article-body.hbs --}}
-    <section id="post-body" class="post-body godo-canvas mx-auto relative {{#match @custom.post_font "=" "font-serif"}}font-serif{{else}}font-sans{{/match}}">
-        {{!-- Post Image - partials/article/article-featured-image.hbs --}}
-        {{#if feature_image}}{{> "article/article-featured-image" image=feature_image}}{{/if}}
+        {{!-- Article Body - partials/article/article-body.hbs --}}
+        <section id="post-body" class="post-body godo-canvas mx-auto relative {{#match @custom.post_font "="
+                                                                                       "font-serif"}}font-serif{{else}}font-sans{{/match}}">
+            {{!-- Post Image - partials/article/article-featured-image.hbs --}}
+            {{#if feature_image}}{{> "article/article-featured-image" image=feature_image}}{{/if}}
 
-        {{content}}
+            {{content}}
 
-        {{!-- Table of Content --}}
-        <div class="godo-content-side top-0 bottom-0 absolute pl-8 row-start-1 hidden font-sans xl:block -mt-1">
-            <div class="sticky top-20 overflow-auto scroll-transparent lg:max-h-(screen-16)">
-                <div class="text-gray-400 font-medium text-xs mb-3">{{t "On this page"}}</div>
-                <div class="js-tocbot text-base space-y-4 leading-tight"></div>
+            {{!-- Table of Content --}}
+            <div class="godo-content-side top-0 bottom-0 absolute pl-8 row-start-1 hidden font-sans xl:block -mt-1">
+                <div class="sticky top-20 overflow-auto scroll-transparent lg:max-h-(screen-16)">
+                    <div class="text-gray-400 font-medium text-xs mb-3">{{t "On this page"}}</div>
+                    <div class="js-tocbot text-base space-y-4 leading-tight"></div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="post-footer godo-canvas pt-10">
-        {{!-- Tags - ./partials/components/tags,hbs --}}
-        {{> "components/tags"}}
+        <footer class="post-footer godo-canvas pt-10">
+            {{!-- Tags - ./partials/components/tags,hbs --}}
+            {{> "components/tags"}}
 
-        {{!-- Social Share - ./partials/components/social-share --}}
-        {{> "components/social-share" Tracking_name="Footer"}}
+            {{!-- Social Share - ./partials/components/social-share --}}
+            {{> "components/social-share" Tracking_name="Footer"}}
 
-        {{!-- Newsletter - ./partials/components/newsletter.hbs --}}
-        {{> "components/newsletter"}}
+            {{!-- Newsletter - ./partials/components/newsletter.hbs --}}
+            {{> "components/newsletter"}}
 
-        {{!-- Previous and next article --}}
-        <div class="prev-next pb-8">
-            <hr class="my-10">
-            {{#prev_post}}
-                {{> "story/story-previous-next" storyTitle=(t "Previous article") class="mb-8"}}
-            {{/prev_post}}
+            {{!-- Previous and next article --}}
+            <div class="prev-next pb-8">
+                <hr class="my-10">
+                {{#prev_post}}
+                    {{> "story/story-previous-next" storyTitle=(t "Previous article") class="mb-8"}}
+                {{/prev_post}}
 
-            {{#next_post}}
-                {{> "story/story-previous-next" storyTitle=(t "Next article") class=""}}
-            {{/next_post}}
-        </div>
-    </footer>
-</article>
+                {{#next_post}}
+                    {{> "story/story-previous-next" storyTitle=(t "Next article") class=""}}
+                {{/next_post}}
+            </div>
+        </footer>
+    </article>
 
 {{/post}}
 
@@ -61,27 +62,97 @@
 {{#post}}{{> "article/article-comments"}}{{/post}}
 
 {{#contentFor "scripts"}}
-<script>
-function godoTocBot() {
-  var $markdown = document.querySelector('.post-body');
-  if (!$markdown) return;
+    <script>
+        let $markdown;
+        let $jsTocBot;
 
-  var $titles = $markdown.querySelectorAll('h2[id]');
+        function godoTocBot() {
+            $markdown = document.querySelector('.post-body');
+            if (!$markdown) return;
 
-  if (!$titles.length) return;
+            const $titles = $markdown.querySelectorAll('h2[id], h3[id]');
 
-  var $jsTocBot = document.querySelector('.js-tocbot');
+            if (!$titles.length) return;
 
-  $titles.forEach(function (el) {
-    var titleLink = document.createElement('a');
-    titleLink.href = '#' + el.getAttribute('id');
-    titleLink.textContent = el.textContent;
-    titleLink.classList = 'text-gray-500 block !no-underline hover:text-gray-900';
+            $jsTocBot = document.querySelector('.js-tocbot');
 
-    $jsTocBot.appendChild(titleLink);
-  });
-};
+            $titles.forEach(function (el) {
+                const titleLink = document.createElement('a');
+                titleLink.href = '#' + el.getAttribute('id');
+                titleLink.textContent = el.textContent.replace(/^\d+\.\s*/, '').split(':')[0].trim();
 
-document.addEventListener('DOMContentLoaded', godoTocBot);
-</script>
+                if (el.tagName.toLowerCase() === 'h2') {
+                    titleLink.classList = 'text-gray-500 block !no-underline hover:text-gray-900';
+                } else {
+                    titleLink.classList = 'ml-4 text-gray-500 block !no-underline hover:text-gray-900';
+                }
+
+                if ($jsTocBot) {
+                    $jsTocBot.appendChild(titleLink);
+                }
+            });
+
+            wrapSections();
+            addIntersectionObserver();
+        };
+
+        function wrapSections() {
+            let currentDiv = document.createElement('div');
+            let currentNode = $markdown.firstChild;
+
+            // Check if the first child is a heading.
+            let isFirstHeading = currentNode && currentNode.nodeType === Node.ELEMENT_NODE && (currentNode.tagName === 'H2' || currentNode.tagName === 'H3');
+
+            if (!isFirstHeading) {
+                // Start the first div immediately if first child is not a heading.
+                $markdown.insertBefore(currentDiv, currentNode);
+            }
+
+            while (currentNode) {
+                let nextNode = currentNode.nextSibling;
+
+                // If the current node is an H2 or H3, start a new div
+                if (currentNode.nodeType === Node.ELEMENT_NODE && (currentNode.tagName === 'H2' || currentNode.tagName === 'H3')) {
+                    // Only create a new div if this isn't the first heading.
+                    if (isFirstHeading && currentNode === $markdown.firstChild) {
+                        isFirstHeading = false;
+                    } else {
+                        currentDiv = document.createElement('div');
+                        currentDiv.dataset.id = currentNode.getAttribute('id');
+                        currentNode.removeAttribute('id');
+                        $markdown.insertBefore(currentDiv, nextNode);
+                    }
+                }
+
+                // Ensure current node is not 'godo-content-side' div before adding it to a section
+                if (!(currentNode.nodeType === Node.ELEMENT_NODE && currentNode.classList.contains('godo-content-side'))) {
+                    currentDiv.appendChild(currentNode);
+                }
+
+                currentNode = nextNode;
+            }
+        }
+
+        function addIntersectionObserver() {
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    const sectionDataId = entry.target.dataset.id;
+                    const link = $jsTocBot.querySelector(`a[href="#${sectionDataId}"]`);
+
+                    if (entry.isIntersecting) {
+                        link?.classList?.add('font-bold', 'text-gray-900');
+                    } else {
+                        link?.classList?.remove('font-bold', 'text-gray-900');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const $sections = $markdown.querySelectorAll('div[data-id]');
+            $sections.forEach(function (section) {
+                observer.observe(section);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', godoTocBot);
+    </script>
 {{/contentFor}}

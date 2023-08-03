@@ -114,19 +114,21 @@ const simplySetup = () => {
     const hasCover = documentBody.closest('.has-cover')
     const $jsHeader = document.querySelector('.js-header')
 
-    window.addEventListener('scroll', () => {
-      const lastScrollY = window.scrollY
+    if ($jsHeader) {
+      window.addEventListener('scroll', () => {
+        const lastScrollY = window.scrollY
 
-      if (lastScrollY > 5) {
-        $jsHeader.classList.add('shadow-header', 'header-bg')
-      } else {
-        $jsHeader.classList.remove('shadow-header', 'header-bg')
-      }
+        if (lastScrollY > 5) {
+          $jsHeader?.classList?.add('shadow-header', 'header-bg')
+        } else {
+          $jsHeader?.classList?.remove('shadow-header', 'header-bg')
+        }
 
-      if (!hasCover) return
+        if (!hasCover) return
 
-      lastScrollY >= 20 ? documentBody.classList.remove('is-head-transparent') : documentBody.classList.add('is-head-transparent')
-    }, { passive: true })
+        lastScrollY >= 20 ? documentBody.classList.remove('is-head-transparent') : documentBody.classList.add('is-head-transparent')
+      }, { passive: true })
+    }
   }
 
   headerTransparency()
