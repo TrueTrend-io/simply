@@ -13,7 +13,7 @@
 
 .post-body, .post-body>div {
   /*  new */
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   line-height: 1.625;
   padding-top: 6vmin;
 
@@ -42,6 +42,7 @@
     transition-duration: 0s;
     transition-timing-function: ease-in;
     transition-delay: 0.1s;
+    font-size: 0.9rem;
   }
 
   .js-tocbot a.font-bold.text-gray-900 {
