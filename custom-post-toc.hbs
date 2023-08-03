@@ -63,35 +63,30 @@
 
 {{#contentFor "scripts"}}
     <script>
-        let $markdown;
-        let $jsTocBot;
+        const $markdown = document.querySelector('.post-body');
+        const $jsTocBot = document.querySelector('.js-tocbot');
 
-        function godoTocBot() {
-            $markdown = document.querySelector('.post-body');
-            if (!$markdown) return;
-
+        if ($markdown) {
             const $titles = $markdown.querySelectorAll('h2[id], h3[id]');
 
-            if (!$titles.length) return;
+            if ($titles.length) {
+                for (const el of $titles) {
+                    const titleLink = document.createElement('a');
+                    titleLink.href = '#' + el.getAttribute('id');
+                    titleLink.textContent = el.textContent.replace(/^\d+\.\s*/, '').split(':')[0].trim();
 
-            $jsTocBot = document.querySelector('.js-tocbot');
+                    const tag = el.tagName.toLowerCase();
+                    const classList = tag === 'h2' ? 'text-gray-500 block !no-underline hover:text-gray-900' : 'ml-4 text-gray-500 block !no-underline hover:text-gray-900';
 
-            $titles.forEach(el => {
-                const titleLink = document.createElement('a');
-                titleLink.href = '#' + el.getAttribute('id');
-                titleLink.textContent = el.textContent.replace(/^\d+\.\s*/, '').split(':')[0].trim();
+                    titleLink.className = classList;
 
-                const tag = el.tagName.toLowerCase();
-                const classList = tag === 'h2' ? 'text-gray-500 block !no-underline hover:text-gray-900' : 'ml-4 text-gray-500 block !no-underline hover:text-gray-900';
+                    $jsTocBot?.appendChild(titleLink);
+                }
 
-                titleLink.className = classList;
-
-                $jsTocBot?.appendChild(titleLink);
-            });
-
-            wrapSections();
-            addIntersectionObserver();
-        };
+                wrapSections();
+                addIntersectionObserver();
+            }
+        }
 
         function wrapSections() {
             let currentDiv = document.createElement('div');
@@ -132,22 +127,21 @@
 
         function addIntersectionObserver() {
             const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
+                for (const entry of entries) {
                     const sectionDataId = entry.target.dataset.id;
                     const link = $jsTocBot.querySelector(`a[href="#${sectionDataId}"]`);
 
-                    if (entry.isIntersecting) {
-                        link?.classList?.add('font-bold', 'text-gray-900');
-                    } else {
-                        link?.classList?.remove('font-bold', 'text-gray-900');
-                    }
-                });
+                    link?.classList.toggle('font-bold', entry.isIntersecting);
+                    link?.classList.toggle('text-gray-900', entry.isIntersecting);
+                }
             }, { threshold: 0.1 });
 
             const $sections = $markdown.querySelectorAll('div[data-id]');
-            $sections.forEach(section => observer.observe(section));
+            for (const section of $sections) {
+                observer.observe(section);
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', godoTocBot);
+        document.body.addEventListener('DOMContentLoaded', godoTocBot);
     </script>
 {{/contentFor}}
