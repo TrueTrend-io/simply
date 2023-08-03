@@ -76,20 +76,17 @@
 
             $jsTocBot = document.querySelector('.js-tocbot');
 
-            $titles.forEach(function (el) {
+            $titles.forEach(el => {
                 const titleLink = document.createElement('a');
                 titleLink.href = '#' + el.getAttribute('id');
                 titleLink.textContent = el.textContent.replace(/^\d+\.\s*/, '').split(':')[0].trim();
 
-                if (el.tagName.toLowerCase() === 'h2') {
-                    titleLink.classList = 'text-gray-500 block !no-underline hover:text-gray-900';
-                } else {
-                    titleLink.classList = 'ml-4 text-gray-500 block !no-underline hover:text-gray-900';
-                }
+                const tag = el.tagName.toLowerCase();
+                const classList = tag === 'h2' ? 'text-gray-500 block !no-underline hover:text-gray-900' : 'ml-4 text-gray-500 block !no-underline hover:text-gray-900';
 
-                if ($jsTocBot) {
-                    $jsTocBot.appendChild(titleLink);
-                }
+                titleLink.className = classList;
+
+                $jsTocBot?.appendChild(titleLink);
             });
 
             wrapSections();
@@ -110,9 +107,10 @@
 
             while (currentNode) {
                 let nextNode = currentNode.nextSibling;
+                const isElement = currentNode.nodeType === Node.ELEMENT_NODE;
 
                 // If the current node is an H2 or H3, start a new div
-                if (currentNode.nodeType === Node.ELEMENT_NODE && (currentNode.tagName === 'H2' || currentNode.tagName === 'H3')) {
+                if (isElement && (currentNode.tagName === 'H2' || currentNode.tagName === 'H3')) {
                     // Only create a new div if this isn't the first heading.
                     if (isFirstHeading && currentNode === $markdown.firstChild) {
                         isFirstHeading = false;
@@ -125,7 +123,7 @@
                 }
 
                 // Ensure current node is not 'godo-content-side' div before adding it to a section
-                if (!(currentNode.nodeType === Node.ELEMENT_NODE && currentNode.classList.contains('godo-content-side'))) {
+                if (!(isElement && currentNode.classList.contains('godo-content-side'))) {
                     currentDiv.appendChild(currentNode);
                 }
 
@@ -134,8 +132,8 @@
         }
 
         function addIntersectionObserver() {
-            const observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
                     const sectionDataId = entry.target.dataset.id;
                     const link = $jsTocBot.querySelector(`a[href="#${sectionDataId}"]`);
 
@@ -148,9 +146,7 @@
             }, { threshold: 0.1 });
 
             const $sections = $markdown.querySelectorAll('div[data-id]');
-            $sections.forEach(function (section) {
-                observer.observe(section);
-            });
+            $sections.forEach(section => observer.observe(section));
         }
 
         document.addEventListener('DOMContentLoaded', godoTocBot);
